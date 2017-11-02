@@ -124,15 +124,11 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
         Mat grayScale = new Mat();
         Imgproc.cvtColor(rgba, grayScale, Imgproc.COLOR_BGR2GRAY);
         Core.MinMaxLocResult res = Core.minMaxLoc(grayScale);
+        
         maxVal = res.maxVal;
         Log.d("maxpt", String.valueOf(res.maxLoc));
-        MainActivity.getxPos();
 
-        //Scanning Portion
-        if (MainActivity.isDeviceConnected()) {
-            String location = String.valueOf(MainActivity.getxPos() + "," + MainActivity.getyPos());
-            //MainActivity.getBrightMap().put(location, res.maxVal);
-        }
+
         return rgba; // This function must return
     }
 

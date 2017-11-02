@@ -10,7 +10,11 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5e68fe08-8684-4b66-8921-3ee1c351e24e" name="Default" comment="" />
+    <list default="true" id="5e68fe08-8684-4b66-8921-3ee1c351e24e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/Auto.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/Auto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/MainActivity.java" />
+    </list>
     <ignored path="USBConn.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,8 +61,8 @@
       <file leaf-file-name="Auto.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/Auto.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="128" column="8" lean-forward="false" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+            <state relative-caret-position="352">
+              <caret line="126" column="8" lean-forward="false" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,10 +73,20 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="267" column="0" lean-forward="false" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
+            <state relative-caret-position="65">
+              <caret line="114" column="56" lean-forward="true" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#6353#6354#0" expanded="true" />
+                <element signature="e#6392#6393#0" expanded="true" />
+                <element signature="e#8838#8839#0" expanded="true" />
+                <element signature="e#8865#8866#0" expanded="true" />
+                <element signature="e#8900#8901#0" expanded="true" />
+                <element signature="e#8927#8928#0" expanded="true" />
+                <element signature="e#8987#8988#0" expanded="true" />
+                <element signature="e#9019#9020#0" expanded="true" />
+                <element signature="e#9068#9069#0" expanded="true" />
+                <element signature="e#9106#9107#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -93,7 +107,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="asier" />
       </map>
     </option>
   </component>
@@ -2874,7 +2888,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509658663518" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509659176882" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2921,7 +2935,7 @@
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />
       </Profilers>
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509658663518" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509659176882" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -3082,7 +3096,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509658663521" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1509659176884" />
       </method>
     </configuration>
     <list size="1">
@@ -3233,6 +3247,16 @@
           <caret line="164" column="64" lean-forward="false" selection-start-line="164" selection-start-column="60" selection-end-line="164" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6353#6354#0" expanded="true" />
+            <element signature="e#6392#6393#0" expanded="true" />
+            <element signature="e#8838#8839#0" expanded="true" />
+            <element signature="e#8865#8866#0" expanded="true" />
+            <element signature="e#8900#8901#0" expanded="true" />
+            <element signature="e#8927#8928#0" expanded="true" />
+            <element signature="e#8987#8988#0" expanded="true" />
+            <element signature="e#9019#9020#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9106#9107#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3332,6 +3356,16 @@
           <caret line="98" column="9" lean-forward="false" selection-start-line="98" selection-start-column="9" selection-end-line="98" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6353#6354#0" expanded="true" />
+            <element signature="e#6392#6393#0" expanded="true" />
+            <element signature="e#8838#8839#0" expanded="true" />
+            <element signature="e#8865#8866#0" expanded="true" />
+            <element signature="e#8900#8901#0" expanded="true" />
+            <element signature="e#8927#8928#0" expanded="true" />
+            <element signature="e#8987#8988#0" expanded="true" />
+            <element signature="e#9019#9020#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9106#9107#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3402,6 +3436,16 @@
           <caret line="53" column="24" lean-forward="false" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6353#6354#0" expanded="true" />
+            <element signature="e#6392#6393#0" expanded="true" />
+            <element signature="e#8838#8839#0" expanded="true" />
+            <element signature="e#8865#8866#0" expanded="true" />
+            <element signature="e#8900#8901#0" expanded="true" />
+            <element signature="e#8927#8928#0" expanded="true" />
+            <element signature="e#8987#8988#0" expanded="true" />
+            <element signature="e#9019#9020#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9106#9107#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3591,18 +3635,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="267" column="0" lean-forward="false" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
+        <state relative-caret-position="65">
+          <caret line="114" column="56" lean-forward="true" selection-start-line="114" selection-start-column="56" selection-end-line="114" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#6353#6354#0" expanded="true" />
+            <element signature="e#6392#6393#0" expanded="true" />
+            <element signature="e#8838#8839#0" expanded="true" />
+            <element signature="e#8865#8866#0" expanded="true" />
+            <element signature="e#8900#8901#0" expanded="true" />
+            <element signature="e#8927#8928#0" expanded="true" />
+            <element signature="e#8987#8988#0" expanded="true" />
+            <element signature="e#9019#9020#0" expanded="true" />
+            <element signature="e#9068#9069#0" expanded="true" />
+            <element signature="e#9106#9107#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/bruckw/usbconn/Auto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="128" column="8" lean-forward="false" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="8" />
+        <state relative-caret-position="352">
+          <caret line="126" column="8" lean-forward="false" selection-start-line="126" selection-start-column="8" selection-end-line="126" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -130,10 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         pan_text.setText("Pan Position: " + progress_value);
-                        String output = "PP" + progress_value + " ";
-                        bytes = output.getBytes(Charset.forName("UTF-8"));
-                        serialPort.write(bytes);
-                        debug_text.setText(output);
+                        write("PP", progress_value);
+                        debug_text.setText("PP" + progress_value);
 
                     }
                 }
@@ -155,10 +153,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                         tilt_text.setText("Tilt Position: " + progress_value);
-                        String output = "TP" + progress_value + " ";
-                        bytes = output.getBytes(Charset.forName("UTF-8"));
-                        serialPort.write(bytes);
-                        debug_text.setText(output);
+                        write("TP", progress_value);
+                        debug_text.setText("TP" + progress_value);
 
 
                     }
@@ -168,19 +164,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void autoClick(View v) {
         brightMap.clear();
-        String output = "PP-3072 ";
-        bytes = output.getBytes(Charset.forName("UTF-8"));
-        serialPort.write(bytes);
 
-        String output1 = "TP500 ";
-        bytes = output1.getBytes(Charset.forName("UTF-8"));
-        serialPort.write(bytes);
+        write("PP", -3072);
+        write("TP", 500);
+        holdOn(2000);
 
-        try {
-            Thread.sleep(2000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         Intent intent = new Intent(getApplicationContext(), Auto.class);
         startActivity(intent);
@@ -216,25 +204,13 @@ public class MainActivity extends AppCompatActivity {
             yPos = 500;
             boolean rotate = true;
             while (yPos >= -1300) {
-                output = "TP" + yPos + " ";
-                bytes = output.getBytes(Charset.forName("UTF-8"));
-                serialPort.write(bytes);
-                try {
-                    Thread.sleep(500);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                write("TP", yPos);
+                holdOn(500);
                 if (rotate) {
                     xPos = -3072;
                     while (xPos <= 3072) {
-                        output = "PP" + xPos + " ";
-                        bytes = output.getBytes(Charset.forName("UTF-8"));
-                        serialPort.write(bytes);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        write("PP", xPos);
+                        holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
                         brightMap.put(location, Auto.getMaxVal());
                         xPos += 768;
@@ -243,16 +219,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     xPos = 3072;
                     while (xPos >= -3072) {
-                        output = "PP" + xPos + " ";
-                        bytes = output.getBytes(Charset.forName("UTF-8"));
-                        serialPort.write(bytes);
+                        write("PP", xPos);
 
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
+                        holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
                         brightMap.put(location, Auto.getMaxVal());
                         xPos -= 768;
@@ -266,12 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            try {
-                Thread.sleep(2000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+            holdOn(2000);
             return null;
         }
 
@@ -297,13 +261,9 @@ public class MainActivity extends AppCompatActivity {
             int xMax = Integer.valueOf(xAndY[0]);
             int yMax = Integer.valueOf(xAndY[1]);
 
-            output = "PP" + xMax + " ";
-            bytes = output.getBytes(Charset.forName("UTF-8"));
-            serialPort.write(bytes);
 
-            output = "TP" + yMax + " ";
-            bytes = output.getBytes(Charset.forName("UTF-8"));
-            serialPort.write(bytes);
+            write ("PP", xMax);
+            write("TP", yMax);
 
         }
     }
@@ -324,6 +284,20 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isDeviceConnected() {
         return deviceConnected;
+    }
+
+    public static void write(String command, int distance) {
+        String output = command + distance + " ";
+        bytes = output.getBytes(Charset.forName("UTF-8"));
+        serialPort.write(bytes);
+    }
+
+    public static void holdOn(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
