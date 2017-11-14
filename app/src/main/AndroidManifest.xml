@@ -34,8 +34,8 @@
                 android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
                 android:resource="@xml/device_filter" />
         </activity>
-        <activity android:name=".AUto" />
         <activity android:name=".Auto"></activity>
+        <activity android:name=".Scan"></activity>
     </application>
 
 </manifest>

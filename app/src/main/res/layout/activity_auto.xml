@@ -5,18 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bruckw.usbconn.Auto">
+    tools:context="com.example.bruckw.usbconn.Scan">
 
     <org.opencv.android.JavaCameraView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:visibility="gone"
-        android:id="@+id/activity_java_surface_view"
+        android:id="@+id/activity_java_auto_view"
         opencv:show_fps="true"
         opencv:camera_id="front"/>
 
     <ImageView
-        android:id="@+id/sampleImageView"
+        android:id="@+id/sampleImageView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"/>

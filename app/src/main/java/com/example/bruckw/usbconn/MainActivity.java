@@ -8,20 +8,16 @@ package com.example.bruckw.usbconn;
         import android.hardware.usb.UsbInterface;
         import android.hardware.usb.UsbManager;
         import android.os.AsyncTask;
-        import android.os.Handler;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.view.View;
         import android.widget.Button;
         import android.widget.SeekBar;
         import android.widget.TextView;
-        import android.widget.Toast;
 
         import com.felhr.usbserial.UsbSerialDevice;
         import com.felhr.usbserial.UsbSerialInterface;
 
-        import java.io.UnsupportedEncodingException;
-        import java.util.Collections;
         import java.nio.charset.Charset;
         import java.util.HashMap;
         import java.util.Map;
@@ -54,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private static int xPos;
     private static int yPos;
     private static HashMap<String, Double> brightMap;
-
-
-    public byte[] newPos;
-    public String currPos;
+    private static boolean scanComplete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +62,11 @@ public class MainActivity extends AppCompatActivity {
 
         scan = (Button) findViewById(R.id.scanBtn);
         reset = (Button) findViewById(R.id.resetBtn);
-        reset.setOnClickListener(resetClick);
-        scan.setOnClickListener(scanClick);
 
         xPos = -3072;
         yPos = 500;
         brightMap = new HashMap<>();
-
+        scanComplete = false;
 
         establishConn();
         seekbar();
@@ -162,33 +153,30 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void autoClick(View v) {
+    public void scanClick(View v) {
         brightMap.clear();
+        if (isDeviceConnected()) {
+            write("PP", -3072);
+            write("TP", 500);
+            holdOn(2000);
+        }
 
-        write("PP", -3072);
-        write("TP", 500);
-        holdOn(2000);
+        Intent intent = new Intent(getApplicationContext(), Scan.class);
+        startActivity(intent);
+    }
 
+    public void resetClick(View v) {
+        String output = "r ";
+        bytes = output.getBytes(Charset.forName("UTF-8"));
+        serialPort.write(bytes);
+        debug_text.setText(output);
+    }
 
+    public void autoClick(View v) {
         Intent intent = new Intent(getApplicationContext(), Auto.class);
         startActivity(intent);
     }
 
-    private View.OnClickListener resetClick = new View.OnClickListener(){
-        public void onClick(View arg0) {
-            String output = "r ";
-            bytes = output.getBytes(Charset.forName("UTF-8"));
-            serialPort.write(bytes);
-            debug_text.setText(output);
-        }
-    };
-
-    private View.OnClickListener scanClick = new View.OnClickListener() {
-        public void onClick(View arg0) {
-            scan(brightMap);
-        }
-
-    };
 
     //Image Processing Methods
     public static void scan(HashMap<String, Double> values) {
@@ -197,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static class ScanTask extends AsyncTask<Void, String, Void> {
-        String output;
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -212,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                         write("PP", xPos);
                         holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
-                        brightMap.put(location, Auto.getMaxVal());
+                        brightMap.put(location, Scan.getMaxVal());
                         xPos += 768;
                     }
                     rotate = false;
@@ -223,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
                         holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
-                        brightMap.put(location, Auto.getMaxVal());
+                        brightMap.put(location, Scan.getMaxVal());
                         xPos -= 768;
                     }
                     rotate = true;
@@ -264,19 +251,30 @@ public class MainActivity extends AppCompatActivity {
 
             write ("PP", xMax);
             write("TP", yMax);
-
+            holdOn(2000);
+            scanComplete = true;
         }
     }
 
+    public static class AutoTask extends AsyncTask<Void, String, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (true) {
 
+                if (Auto.getxLoc() > 384 && xPos > -3072) {
+                    xPos -= 768;
+                    write("PP", xPos);
+                } else if (Auto.getxLoc() < 96 && xPos < 3072) {
+                    xPos += 768;
+                    write("PP", xPos);
+                }
+                holdOn(1500);
+            }
+        }
 
-    public static int getxPos() {
-        return xPos;
     }
 
-    public static int getyPos() {
-        return yPos;
-    }
+
 
     public static HashMap<String, Double> getBrightMap() {
         return brightMap;
@@ -284,6 +282,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isDeviceConnected() {
         return deviceConnected;
+    }
+
+    public static boolean isScanComplete() {
+        return scanComplete;
     }
 
     public static void write(String command, int distance) {
