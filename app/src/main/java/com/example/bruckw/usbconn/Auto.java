@@ -36,6 +36,9 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
     private static Double xLoc;
     private static Double yLoc;
 
+    private static Double dispWidth;
+    private static Double dispHeight;
+
     // These variables are used (at the moment) to fix camera orientation from 270degree to 0degree
     Mat mRgba;
     Mat mRgbaF;
@@ -109,6 +112,8 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
         mRgbaF = new Mat(height, width, CvType.CV_8UC4);
         mRgbaT = new Mat(width, width, CvType.CV_8UC4);
 
+        dispWidth = (double) height;
+        dispHeight = (double) width;
         new MainActivity.AutoTask().execute();
     }
 
@@ -134,5 +139,13 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
 
     public static Double getyLoc() {
         return yLoc;
+    }
+
+    public static Double getHeight(){
+        return dispHeight;
+    }
+
+    public static Double getWidth() {
+        return dispWidth;
     }
 }

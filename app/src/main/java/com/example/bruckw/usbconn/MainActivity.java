@@ -22,6 +22,15 @@ package com.example.bruckw.usbconn;
         import java.util.HashMap;
         import java.util.Map;
 
+        import static com.example.bruckw.usbconn.MainActivity.Region.AR;
+        import static com.example.bruckw.usbconn.MainActivity.Region.B;
+        import static com.example.bruckw.usbconn.MainActivity.Region.BL;
+        import static com.example.bruckw.usbconn.MainActivity.Region.BR;
+        import static com.example.bruckw.usbconn.MainActivity.Region.L;
+        import static com.example.bruckw.usbconn.MainActivity.Region.U;
+        import static com.example.bruckw.usbconn.MainActivity.Region.UL;
+        import static com.example.bruckw.usbconn.MainActivity.Region.UR;
+
 
 public class MainActivity extends AppCompatActivity {
     //UI
@@ -256,18 +265,97 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public enum Region {
+        UL, U, UR, //Upper Left, Upper, Upper Right
+        L, AR, R, //Left, Acceptable Region, Right
+        BL, B, BR, //Bottom Left, Bottom, Bottom Right
+    }
+
+    public static Region inRegion(Double xLoc, Double yLoc) {
+
+        Double dispWidth = Auto.getWidth();
+        Double dispHeight = Auto.getHeight();
+
+        Double xMax = 0.8 * dispWidth;
+        Double xMin = 0.2 * dispWidth;
+        Double yMax = 0.8 * dispHeight;
+        Double yMin = 0.2 * dispHeight;
+
+
+        if (yLoc > yMax) {
+            if (xLoc > xMax) {
+                return UL;
+            } else if (xLoc > xMin) {
+                return U;
+            } else {
+                return UR;
+            }
+        } else if (yLoc > yMin) {
+            if (xLoc > xMax) {
+                return L;
+            } else if (xLoc < xMin) {
+                return Region.R;
+            }
+        } else if (yLoc < yMin) {
+            if (xLoc > xMax) {
+                return BL;
+            } else if (xLoc > xMin) {
+                return B;
+            } else {
+                return BR;
+            }
+        }
+        return AR;
+    }
+
     public static class AutoTask extends AsyncTask<Void, String, Void> {
         @Override
         protected Void doInBackground(Void... params) {
+            Double xBrightPos;
+            Double yBrightPos;
             while (true) {
+                xBrightPos = Auto.getxLoc();
+                yBrightPos = Auto.getyLoc();
 
-                if (Auto.getxLoc() > 384 && xPos > -3072) {
-                    xPos -= 768;
-                    write("PP", xPos);
-                } else if (Auto.getxLoc() < 96 && xPos < 3072) {
-                    xPos += 768;
-                    write("PP", xPos);
+                Region region = inRegion(xBrightPos, yBrightPos);
+
+                switch (region) {
+                    case UL:
+
+                        break;
+                    case U:
+                        if (yPos > -1300) {
+                            yPos -= 900;
+                            write("TP", yPos);
+                        }
+                        break;
+                    case UR:
+                        break;
+                    case L:
+                        if (xPos > -3072) {
+                            xPos -= 768;
+                            write("PP", xPos);
+                        }
+                        break;
+                    case R:
+                        if (xPos < 3072) {
+                            xPos += 768;
+                            write("PP", xPos);
+                        }
+                        break;
+                    case BL:
+                        break;
+                    case B:
+                        if (yPos < 500) {
+                            yPos += 900;
+                            write("TP", yPos);
+                        }
+                        break;
+                    case BR:
+                        break;
+                    default: break;
                 }
+
                 holdOn(1500);
             }
         }
@@ -288,8 +376,8 @@ public class MainActivity extends AppCompatActivity {
         return scanComplete;
     }
 
-    public static void write(String command, int distance) {
-        String output = command + distance + " ";
+    public static void write(String command, int location) {
+        String output = command + location + " ";
         bytes = output.getBytes(Charset.forName("UTF-8"));
         serialPort.write(bytes);
     }
