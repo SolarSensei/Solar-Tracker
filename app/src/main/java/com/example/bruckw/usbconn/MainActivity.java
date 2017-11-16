@@ -321,7 +321,14 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (region) {
                     case UL:
-
+                        if (yPos > -1300) {
+                            yPos -= 900;
+                            write("TP", yPos);
+                            if (xPos > -3072) {
+                                xPos -= 768;
+                                write("PP", xPos);
+                            }
+                        }
                         break;
                     case U:
                         if (yPos > -1300) {
@@ -330,6 +337,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case UR:
+                        if (yPos > -1300) {
+                            yPos -= 900;
+                            write("TP", yPos);
+                            if (xPos < 3072) {
+                                xPos += 768;
+                                write("PP", xPos);
+                            }
+                        }
                         break;
                     case L:
                         if (xPos > -3072) {
@@ -344,6 +359,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case BL:
+                        if (yPos < 500) {
+                            yPos += 900;
+                            write("TP", yPos);
+                            if (xPos > -3072) {
+                                xPos -= 768;
+                                write("PP", xPos);
+                            }
+                        }
                         break;
                     case B:
                         if (yPos < 500) {
@@ -352,6 +375,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case BR:
+                        if (yPos < 500) {
+                            yPos += 900;
+                            write("TP", yPos);
+                            if (xPos < 3072) {
+                                xPos += 768;
+                                write("PP", xPos);
+                            }
+                        }
                         break;
                     default: break;
                 }
