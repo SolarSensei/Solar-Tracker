@@ -216,7 +216,6 @@ public class MainActivity extends AppCompatActivity {
                     xPos = 3072;
                     while (xPos >= -3072) {
                         write("PP", xPos);
-
                         holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
                         brightMap.put(location, Scan.getMaxVal());
@@ -293,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (yLoc > yMin) {
             if (xLoc > xMax) {
                 return L;
-            } else if (xLoc < xMin) {
+            } else if (xLoc > xMin) {
                 return Region.R;
             }
         } else if (yLoc < yMin) {
