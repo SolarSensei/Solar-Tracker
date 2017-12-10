@@ -10,6 +10,7 @@ package com.example.bruckw.usbconn;
         import android.os.AsyncTask;
         import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
+        import android.util.Log;
         import android.view.View;
         import android.widget.Button;
         import android.widget.SeekBar;
@@ -72,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         scan = (Button) findViewById(R.id.scanBtn);
         reset = (Button) findViewById(R.id.resetBtn);
 
-        xPos = -3072;
-        yPos = 500;
+        xPos = -2700;
+        yPos = 580;
         brightMap = new HashMap<>();
         scanComplete = false;
 
@@ -104,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
             serialPort.write(bytes);
 
             //Set the tilt speed
-            String tiltSpeed = "PS" + 8000 + " ";
+            String tiltSpeed = "TS" + 300 + " ";
             bytes = tiltSpeed.getBytes(Charset.forName("UTF-8"));
             serialPort.write(bytes);
+
         }
     }
 
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     int progress_value;
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        progress_value = progress - 1800;
+                        progress_value = progress - 900;
                     }
 
                     @Override
@@ -197,36 +199,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
 
-            yPos = 500;
+            yPos = 580;
             boolean rotate = true;
-            while (yPos >= -1300) {
+            while (yPos >= -880) {
                 write("TP", yPos);
-                holdOn(500);
+                holdOn(4000);
                 if (rotate) {
-                    xPos = -3072;
-                    while (xPos <= 3072) {
+                    xPos = -2700;
+                    while (xPos <= 2700) {
                         write("PP", xPos);
                         holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
                         brightMap.put(location, Scan.getMaxVal());
-                        xPos += 768;
+                        xPos += 675;
                     }
                     rotate = false;
                 } else {
-                    xPos = 3072;
-                    while (xPos >= -3072) {
+                    xPos = 2700;
+                    while (xPos >= -2700) {
                         write("PP", xPos);
                         holdOn(1000);
                         String location = String.valueOf(xPos) + "," + String.valueOf(yPos);
                         brightMap.put(location, Scan.getMaxVal());
-                        xPos -= 768;
+                        xPos -= 675;
                     }
                     rotate = true;
                 }
-                if (yPos == -1300) {
+                if (yPos == -880) {
                     break;
                 } else {
-                    yPos -= 900;
+                    yPos -= 730;
                 }
             }
 
@@ -259,7 +261,9 @@ public class MainActivity extends AppCompatActivity {
 
             write ("PP", xMax);
             write("TP", yMax);
-            holdOn(2000);
+            holdOn(4000);
+
+
             scanComplete = true;
         }
     }
@@ -281,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         Double yMin = 0.2 * dispHeight;
 
 
-        if (yLoc > yMax) {
+        if (yLoc >= yMax) {
             if (xLoc > xMax) {
                 return UL;
             } else if (xLoc > xMin) {
@@ -292,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (yLoc > yMin) {
             if (xLoc > xMax) {
                 return L;
-            } else if (xLoc > xMin) {
+            } else if (xLoc < xMin) {
                 return Region.R;
             }
         } else if (yLoc < yMin) {
@@ -312,82 +316,89 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             Double xBrightPos;
             Double yBrightPos;
+            Double brightVal;
             while (true) {
                 xBrightPos = Auto.getxLoc();
                 yBrightPos = Auto.getyLoc();
-
+                brightVal = Auto.getBrightVal();
                 Region region = inRegion(xBrightPos, yBrightPos);
+                Log.d("brightVal", String.valueOf(brightVal));
 
-                switch (region) {
-                    case UL:
-                        if (yPos > -1300) {
-                            yPos -= 900;
-                            write("TP", yPos);
-                            if (xPos > -3072) {
-                                xPos -= 768;
+                if (brightVal != null && brightVal > 100.0) {
+                    switch (region) {
+                        case UL:
+                            if (yPos > -880) {
+                                yPos -= 365;
+                                write("TP", yPos);
+                            }
+                            if (xPos > -2700) {
+                                xPos -= 675;
                                 write("PP", xPos);
                             }
-                        }
-                        break;
-                    case U:
-                        if (yPos > -1300) {
-                            yPos -= 900;
-                            write("TP", yPos);
-                        }
-                        break;
-                    case UR:
-                        if (yPos > -1300) {
-                            yPos -= 900;
-                            write("TP", yPos);
-                            if (xPos < 3072) {
-                                xPos += 768;
+                            break;
+                        case U:
+                            if (yPos > -880) {
+                                yPos -= 365;
+                                write("TP", yPos);
+                            }
+                            break;
+                        case UR:
+                            if (yPos > -880) {
+                                yPos -= 365;
+                                write("TP", yPos);
+                            }
+                            if (xPos < 2700) {
+                                xPos += 675;
                                 write("PP", xPos);
                             }
-                        }
-                        break;
-                    case L:
-                        if (xPos > -3072) {
-                            xPos -= 768;
-                            write("PP", xPos);
-                        }
-                        break;
-                    case R:
-                        if (xPos < 3072) {
-                            xPos += 768;
-                            write("PP", xPos);
-                        }
-                        break;
-                    case BL:
-                        if (yPos < 500) {
-                            yPos += 900;
-                            write("TP", yPos);
-                            if (xPos > -3072) {
-                                xPos -= 768;
+                            break;
+                        case L:
+
+                            if (xPos > -2700) {
+                                xPos -= 675;
                                 write("PP", xPos);
                             }
-                        }
-                        break;
-                    case B:
-                        if (yPos < 500) {
-                            yPos += 900;
-                            write("TP", yPos);
-                        }
-                        break;
-                    case BR:
-                        if (yPos < 500) {
-                            yPos += 900;
-                            write("TP", yPos);
-                            if (xPos < 3072) {
-                                xPos += 768;
+                            break;
+                        case R:
+                            if (xPos < 2700) {
+                                xPos += 675;
                                 write("PP", xPos);
                             }
-                        }
-                        break;
-                    default: break;
+                            break;
+                        case BL:
+                            if (yPos < 580) {
+                                yPos += 365;
+                                write("TP", yPos);
+                            }
+                            if (xPos > -2700) {
+                                xPos -= 675;
+                                write("PP", xPos);
+                            }
+                            break;
+                        case B:
+                            if (yPos < 580) {
+                                yPos += 365;
+                                write("TP", yPos);
+                            }
+                            break;
+                        case BR:
+                            if (yPos < 580) {
+                                yPos += 365;
+                                write("TP", yPos);
+                            }
+                            if (xPos < 2700) {
+                                xPos += 675;
+                                write("PP", xPos);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                    holdOn(2000);
+
                 }
 
-                holdOn(1500);
-            }
         }
 
     }

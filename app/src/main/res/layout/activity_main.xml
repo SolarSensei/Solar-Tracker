@@ -29,7 +29,7 @@
         android:layout_width="371dp"
         android:layout_height="0dp"
         android:layout_marginTop="300dp"
-        android:max="2300"
+        android:max="1500"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="7dp" />
 
@@ -83,4 +83,12 @@
         app:layout_constraintBottom_toTopOf="@+id/seekBar1"
         app:layout_constraintLeft_toRightOf="@+id/resetBtn"
         app:layout_constraintRight_toLeftOf="@+id/scanBtn" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="98dp" />
 </android.support.constraint.ConstraintLayout>

@@ -112,13 +112,17 @@ public class Scan extends AppCompatActivity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat rgba = inputFrame.rgba();
+        if (MainActivity.isScanComplete()) {
+            Intent intent = new Intent(getApplicationContext(), Auto.class);
+            startActivity(intent);
+        } else {
+            Mat grayScale = new Mat();
+            Imgproc.cvtColor(rgba, grayScale, Imgproc.COLOR_BGR2GRAY);
+            Core.MinMaxLocResult res = Core.minMaxLoc(grayScale);
+            maxVal = res.maxVal;
+        }
 
-        Mat grayScale = new Mat();
-        Imgproc.cvtColor(rgba, grayScale, Imgproc.COLOR_BGR2GRAY);
-        Core.MinMaxLocResult res = Core.minMaxLoc(grayScale);
-
-        maxVal = res.maxVal;
-        Log.d("maxpt", String.valueOf(res.maxLoc));
+        Log.d("maxpt", String.valueOf(maxVal));
 
         return rgba; // This function must return
     }

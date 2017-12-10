@@ -1,5 +1,6 @@
 package com.example.bruckw.usbconn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
 
     private static Double xLoc;
     private static Double yLoc;
+    private static Double brightVal;
 
     private static Double dispWidth;
     private static Double dispHeight;
@@ -128,7 +130,7 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
         Core.MinMaxLocResult res = Core.minMaxLoc(grayScale);
         xLoc = res.maxLoc.y;
         yLoc = res.maxLoc.x;
-
+        brightVal = res.maxVal;
 
         return mRgba; // This function must return
     }
@@ -139,6 +141,10 @@ public class Auto extends AppCompatActivity implements CvCameraViewListener2 {
 
     public static Double getyLoc() {
         return yLoc;
+    }
+
+    public static Double getBrightVal() {
+        return brightVal;
     }
 
     public static Double getHeight(){
