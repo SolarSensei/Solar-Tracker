@@ -11,4 +11,4 @@ Scan (/app/src/main/java/com/example/bruckw/usbconn/Scan.java & MainActivity.jav
 
 Auto (/app/src/main/java/com/example/bruckw/usbconn/Auto.java & MainActivity.java)
 
-  -Completes the Scan function also but tracks the sun's movements and send position changes to the pan/tilt
+  -Completes the Scan function but also tracks the sun's movements and send position changes to the pan/tilt
